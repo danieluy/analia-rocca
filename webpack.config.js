@@ -1,14 +1,16 @@
 const webpack = require('webpack');
 const path = require('path');
+const autoprefixer = require('autoprefixer');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = (env) => {
   const config = {
     entry: {
-      bundle: path.join(__dirname, '/src/index.js'),
+      bundle: path.join(__dirname, '/src/index.js')
     },
     output: {
       filename: '[name].js',
-      path: path.join(__dirname, '/build/'),
+      path: path.join(__dirname, '/public/js/'),
     },
     module: {
       loaders: [
@@ -16,11 +18,19 @@ module.exports = (env) => {
           rules: [
             {
               test: /\.css$/,
-              use: ['style-loader', 'css-loader'],
+              use: [
+                { loader: 'style-loader' },
+                { loader: 'css-loader' },
+                { loader: 'postcss-loader', options: { plugins: () => [autoprefixer] } }
+              ]
             },
             {
               test: /\.scss$/,
-              use: ['style-loader', 'css-loader', 'sass-loader'],
+              use: [
+                { loader: 'style-loader' },
+                { loader: 'css-loader' },
+                { loader: 'postcss-loader', options: { plugins: () => [autoprefixer] } },
+                { loader: 'sass-loader' }]
             },
             {
               test: /\.(jpe?g|png|gif|svg)$/i,
@@ -29,50 +39,33 @@ module.exports = (env) => {
                 'img-loader'
               ]
             }
-          ],
+          ]
         },
         {
           loader: 'babel-loader',
           include: [
-            path.join(__dirname, '/src/'),
+            path.join(__dirname, '/src/')
           ],
+          exclude: /(node_modules|bower_components)/,
           test: /\.jsx?$/,
           query: {
-            presets: ['es2015', 'react'],
-          },
+            presets: ['env', 'react']
+          }
         },
-      ],
-    },
+      ]
+    }
   };
   if (env.development) {
     config.devtool = 'inline-source-map';
-    config.devServer = {
-      contentBase: './build/',
-      port: env.PORT || 3000,
-    };
-    // config.module.loaders.push({
-    //   test: /\.jsx?$/,
-    //   enforce: 'pre',
-    //   loader: 'eslint-loader',
-    //   include: path.join(__dirname, 'src'),
-    //   options: {
-    //     emitWarning: true,
-    //   }
-    // })
   }
   if (env.production) {
     config.plugins = [
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify('production'),
-        },
+          NODE_ENV: JSON.stringify('production')
+        }
       }),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: true,
-        },
-      }),
-      new webpack.optimize.AggressiveMergingPlugin(),
+      new UglifyJsPlugin({})
     ];
   }
   return config;

@@ -1,9 +1,16 @@
-# Analia Rocca
-## Jewelry Website
-### Config
-#### main.js
+# Analia Rocca's Jewelry Website
+## Config
+### index.js
 ```javascript
-export default {
-  siteName: 'Analia Rocca'
-}
+const server = require('./server')
+module.exports = {
+  siteName: 'Analia Rocca',
+  server
+};
+```
+### server.js
+```javascript
+module.exports = {
+  port: 3000
+};
 ```

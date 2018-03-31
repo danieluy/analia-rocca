@@ -13,6 +13,7 @@ class Dashboard extends React.Component {
     firebase.auth().onAuthStateChanged()
       .then(user => console.log(user))
       .catch(err => console.error(err));
+    firebase.database().ref('collections').on(res => console.log('on', res));
   }
   signInWithGogle() {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();

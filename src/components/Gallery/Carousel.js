@@ -13,11 +13,11 @@ class Carousel extends React.Component {
   }
   init() {
     const pswpElement = document.querySelectorAll('.pswp')[0];
+    console.log('this.props.photos', this.props.photos);
     const items = this.props.photos;
     const options = { index: this.props.index };
     const gallery = new PhotoSwipe(pswpElement, photoSwipeUIDefault, items, options);
     gallery.listen('close', () => {
-      gallery.destroy();
       this.props.onClose();
     });
     gallery.init();
@@ -50,8 +50,6 @@ class Carousel extends React.Component {
 
               <div className="pswp__top-bar">
 
-                {/* Controls are self-explanatory. Order can be changed. */}
-
                 <div className="pswp__counter" />
 
                 <button className="pswp__button pswp__button--close" title="Close (Esc)" />
@@ -62,8 +60,6 @@ class Carousel extends React.Component {
 
                 <button className="pswp__button pswp__button--zoom" title="Zoom in/out" />
 
-                {/* Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR */}
-                {/* element will get class pswp__preloader--active when preloader is running */}
                 <div className="pswp__preloader">
                   <div className="pswp__preloader__icn">
                     <div className="pswp__preloader__cut">

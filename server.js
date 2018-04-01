@@ -8,15 +8,10 @@ const homeRouter = require('./routers/home');
 const authRouter = require('./routers/auth');
 const apiRouter = require('./routers/api');
 const config = require('./config/');
-// Firebase
-const firebaseAdmin = require('firebase-admin');
-const serviceAccount = require('./config/serviceAccountKey.json');
-firebaseAdmin.initializeApp({
-  credential: firebaseAdmin.credential.cert(serviceAccount),
-  databaseURL: 'https://mywebsite-6b7fa.firebaseio.com'
-});
+const firebaseAdmin = require('./firebase');
+// Locals
 app.locals.firebaseAdmin = firebaseAdmin;
-//  Public folder
+// Middleware
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -24,6 +19,7 @@ app.use(bearerToken());
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
 app.use('/', homeRouter);
+// Init server
 server.listen(config.server.port, () => {
   console.info(`Server listening on http://localhost:${config.server.port}`);
 });

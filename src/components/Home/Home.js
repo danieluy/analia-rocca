@@ -1,7 +1,7 @@
-/* global firebase */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Gallery from '../Gallery/Gallery';
+import Collection from '../Collection/Collection';
+import { getCollections, populateCollections } from '../../firebase';
 
 class Home extends React.Component {
   constructor() {
@@ -9,26 +9,30 @@ class Home extends React.Component {
     this.state = {
       collections: null
     };
+    this.fetchCollections = this.fetchCollections.bind(this);
   }
   componentDidMount() {
-    firebase.database().ref('collections').on('value', (dataSnapshot) => {
-      this.setState({
-        collections: dataSnapshot.val()
-      });
-    });
+    this.fetchCollections();
+  }
+  fetchCollections() {
+    getCollections()
+      .then(collections => populateCollections(collections))
+      .then(collections => this.setState({ collections }))
+      .catch(err => console.error(err));
   }
   render() {
+    const { collections } = this.state;
     return (
       <div>
-        {this.props.config.siteName}
-        {this.state.collections
-          ? this.state.collections.map(collection => (
-            <Gallery
-              key={`collection-galley-${collection.name}`}
-              photos={collection.images}
+        <h1>{this.props.config.siteName}</h1>
+        {(collections && collections.length)
+          ? collections.map((collection, i) => (
+            <Collection
+              key={`collection-${i}`}
+              collection={collection}
             />
           ))
-          : <h4>Loading...</h4>
+          : <h4>Loading Collections...</h4>
         }
       </div>
     );

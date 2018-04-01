@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Carousel from './Carousel';
 
-class Gallery extends React.Component {
+class Gallery extends React.PureComponent {
   constructor() {
     super();
     this.state = {
@@ -18,6 +18,7 @@ class Gallery extends React.Component {
       .catch(err => console.error(err));
   }
   findImagesDimensions() {
+    console.log('this.props.photos', this.props.photos);
     return Promise.all(this.props.photos
       .map(photo => new Promise((resolve) => {
         const img = new Image();
@@ -50,7 +51,7 @@ class Gallery extends React.Component {
           }
         </div>
       );
-    return <h4>Loading...</h4>;
+    return <h4>Loading Gallery...</h4>;
   }
 }
 
@@ -58,8 +59,6 @@ export default Gallery;
 
 Gallery.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.shape({
-    src: PropTypes.string,
-    w: PropTypes.number,
-    h: PropTypes.number
+    src: PropTypes.string
   })).isRequired
 };

@@ -16,7 +16,8 @@
       storageBucket: "mywebsite-6b7fa.appspot.com",
       messagingSenderId: "140429836290"
     };
-    firebase.initializeApp(config);
+    if (typeof firebase !== 'undefined')
+      firebase.initializeApp(config);
   </script>
 </head>
 

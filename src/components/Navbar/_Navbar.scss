@@ -1,0 +1,45 @@
+#navbar {
+    width: $navbar-width;
+    position: fixed;
+    z-index: 1000;
+}
+
+.menu-icon-wrapper {
+    position: fixed;
+    z-index: 1002;
+    width: $navbar-height;
+    height: $navbar-height;
+    padding: 15px;
+    border-style: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.menu-title-wrapper {
+    position: fixed;
+    height: $navbar-height;
+    left: $navbar-height;
+    padding-left: 15px;
+    text-decoration: none;
+    font-weight: 100;
+    h1 {
+        line-height: $navbar-height;
+    }
+}
+
+.nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    width: $navbar-width;
+    height: 100%;
+    padding-top: $navbar-height;
+    background-color: #FFF;
+    box-shadow: 2px 0 4px 0 rgba(0, 0, 0, 0.25);
+    transition: left 300ms ease-out;
+}
+
+.nav-links.hidden {
+    left: -$navbar-width;
+}

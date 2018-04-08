@@ -8,10 +8,15 @@ $primary-color: #009688;
 $accent-color: #FF7043;
 $warning: #689F38;
 $error: #F44336;
+
+$navbar-width: 300px;
+$navbar-height: 60px;
+
 html {
     font-size: 16px;
     font-weight: 300;
     font-family: FreeSans, Helvetica, Arial, sans-serif;
+    background-color: $grey50;
 }
 
 * {
@@ -52,8 +57,8 @@ html {
     }
 }
 
-@import './Home/Home';
 @import './Navbar/Navbar';
+@import './Home/Home';
 @import './InputFiles/InputFiles';
 /*@media screen and (max-width: 1200px){ }*/
 

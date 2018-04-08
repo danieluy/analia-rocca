@@ -24,7 +24,6 @@ class Home extends React.Component {
     const { collections } = this.state;
     return (
       <div>
-        <h1>{this.props.config.siteName}</h1>
         {(collections && collections.length)
           ? collections.map((collection, i) => (
             <Collection

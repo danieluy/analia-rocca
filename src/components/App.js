@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.scss';
 import debounce from 'lodash/debounce';
 import { Switch, Route } from 'react-router-dom';
+import Navbar from './Navbar/Navbar';
 import Home from './Home/Home';
 import Dashboard from './Dashboard/Dashboard';
 import config from '../../config/';
@@ -29,10 +30,13 @@ class App extends Component {
   }
   render() {
     return (
-      <Switch>
-        <Route path="/" exact render={() => <Home config={config} window={this.state.window} />} />
-        <Route path="/dashboard" render={() => <Dashboard config={config} window={this.state.window} />} />
-      </Switch>
+      <div>
+        <Navbar config={config} window={this.state.window} />
+        <Switch>
+          <Route path="/" exact render={() => <Home config={config} window={this.state.window} />} />
+          <Route path="/dashboard" render={() => <Dashboard config={config} window={this.state.window} />} />
+        </Switch>
+      </div>
     );
   }
 }

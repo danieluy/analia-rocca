@@ -16,7 +16,7 @@ class Navbar extends React.Component {
     return (
       <div id="navbar" style={{ height }}>
         <button onClick={() => this.setState({ open: !this.state.open })} className="menu-icon-wrapper">
-          <MenuIcon width={30} fill={color.grey50} />
+          <MenuIcon width={30} fill={color.grey700} />
         </button>
         <Link to="/" className="menu-title-wrapper">
           <h1>{this.props.config.siteName}</h1>

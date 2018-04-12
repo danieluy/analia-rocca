@@ -17,13 +17,11 @@
     border-style: none;
     background-color: transparent;
     cursor: pointer;
-    svg {
-        filter: drop-shadow( 0 1px 1px rgba(0, 0, 0, 0.5));
-    }
 }
 
 .menu-title-wrapper {
     position: fixed;
+    z-index: 1002;
     height: $navbar-height;
     left: $navbar-height;
     padding-left: 15px;

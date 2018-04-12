@@ -18,7 +18,6 @@ class Gallery extends React.PureComponent {
       .catch(err => console.error(err));
   }
   findImagesDimensions() {
-    console.log('this.props.photos', this.props.photos);
     return Promise.all(this.props.photos
       .map(photo => new Promise((resolve) => {
         const img = new Image();

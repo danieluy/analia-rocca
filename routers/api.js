@@ -10,13 +10,56 @@ router.get('/collections', isAuthenticated, (req, res) => {
   db.ref('collections')
     .once(
       'value',
-      snapshot => res.status(200).json(snapshot.val().filter(collection => !!collection)),
+      (snapshot) => {
+        const collections = snapshot.val();
+        Promise.all(collections.map((collection, i) => new Promise((resolve, reject) => {
+          db.ref('documents')
+            .orderByChild('collection')
+            .equalTo(i)
+            .once(
+              'value',
+              (snapshot2) => {
+                let photos = snapshot2.val();
+                if (!Array.prototype.isPrototypeOf(photos))
+                  photos = Object.entries(photos).map(photo => photo[1]); // when firebase collection has only one item
+                resolve(Object.assign({}, collection, { photos }));
+              },
+              err => reject(err)
+            );
+        })))
+          .then(populatedCollections => res.status(200).json(populatedCollections))
+          .catch((err) => {
+            console.error(err);
+            res.status(500).json({ message: 'Error reading data' });
+          });
+      },
       (err) => {
         console.error(err);
         res.status(500).json({ message: 'Error reading data' });
       }
     );
 });
+
+// const populateCollections = collections =>
+//   Promise.all(collections
+//     .map((collection, i) => new Promise((resolve, reject) => {
+//       if (typeof firebase !== 'undefined')
+//         firebase.database().ref('documents')
+//           .orderByChild('collection')
+//           .equalTo(i)
+//           .once(
+//             'value',
+//             (snapshot) => {
+//               let photos = snapshot.val();
+//               if (!Array.prototype.isPrototypeOf(photos))
+//                 photos = Object.entries(photos).map(photo => photo[1]); // when firebase collection has only one item
+//               resolve(Object.assign({}, collection, { photos }));
+//             },
+//             err => reject(err)
+//           );
+//       else
+//         handleBackendError(FIREBASE_UNAVAILABLE);
+//     })));
 
 
 const collectionUpload = multer({ dest: 'public/photos/' });

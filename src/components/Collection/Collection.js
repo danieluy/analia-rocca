@@ -9,9 +9,8 @@ class Collection extends React.PureComponent {
   }
   render() {
     const { title, photos } = this.props.collection;
-    console.log({ title, photos });
     return (
-      <div>
+      <div className="collection">
         <h2>{title.es}</h2>
         <Gallery photos={photos} />
       </div>

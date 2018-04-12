@@ -1,7 +1,7 @@
 /* global firebase */
 import { handleBackendError } from './utils';
 
-const firebaseUnavailable = {
+const FIREBASE_UNAVAILABLE = {
   status: 400,
   response: {
     body: {
@@ -19,7 +19,7 @@ const getCollections = () =>
         err => reject(err)
       );
     else
-      handleBackendError(firebaseUnavailable);
+      handleBackendError(FIREBASE_UNAVAILABLE);
   });
 
 const populateCollections = collections =>
@@ -40,7 +40,7 @@ const populateCollections = collections =>
             err => reject(err)
           );
       else
-        handleBackendError(firebaseUnavailable);
+        handleBackendError(FIREBASE_UNAVAILABLE);
     })));
 
 export {

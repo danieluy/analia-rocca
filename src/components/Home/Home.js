@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Collection from '../Collection/Collection';
+import Container from '../Container/Container';
 import { getCollections, populateCollections } from '../../firebase';
 
 class Home extends React.Component {
@@ -23,7 +24,7 @@ class Home extends React.Component {
   render() {
     const { collections } = this.state;
     return (
-      <div>
+      <Container>
         {(collections && collections.length)
           ? collections.map((collection, i) => (
             <Collection
@@ -33,7 +34,7 @@ class Home extends React.Component {
           ))
           : <h4>Loading Collections...</h4>
         }
-      </div>
+      </Container>
     );
   }
 }

@@ -1,0 +1,21 @@
+.container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: $navbar-height;
+    @media screen and (max-width: 1200px) {
+        width: 960px;
+    }
+    @media screen and (max-width: 960px) {
+        width: 768px;
+    }
+    @media screen and (max-width: 768px) {
+        width: 480px;
+    }
+    @media screen and (max-width: 480px) {
+        width: 100%;
+    }
+    .fullWidth {
+        width: 100%;
+        margin: 0;
+    }
+}

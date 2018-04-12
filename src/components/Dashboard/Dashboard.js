@@ -1,8 +1,9 @@
 /* global firebase */
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { verifyGoogleId, getCollections } from '../../backend';
-import ListGallery from '../Gallery/ListGallery';
+import Container from '../Container/Container';
+import CollectionList from '../Collection/CollectionList';
 import { handleBackendError } from '../../utils';
 import InputCollection from '../InputCollection/InputCollection';
 
@@ -57,30 +58,32 @@ class Dashboard extends React.Component {
       .catch(err => handleBackendError(err));
   }
   render() {
-    if (this.state.user)
+    if (this.state.user) {
+      console.log('this.state.collections', this.state.collections);
       return (
-        <div>
+        <Container>
           <h1>Dashboard</h1>
           <button onClick={this.signOutOfGogle}>Sign Out Of Google</button>
           <h2>Collections</h2>
           {this.state.collections
             ? this.state.collections.map(collection => (
-              <ListGallery
-                key={`dash-collection-gallery-${collection.name}`}
-                photos={collection.images}
+              <CollectionList
+                key={`collection-list-${collection.title.es}`}
+                collection={collection}
               />
             ))
             : <h4>Loading...</h4>
           }
           <InputCollection />
-        </div>
+        </Container>
       );
-    return <button onClick={this.signInWithGogle}>Sign In With Google</button>;
+    }
+    return (
+      <Container>
+        <button onClick={this.signInWithGogle}>Sign In With Google</button>
+      </Container>
+    );
   }
 }
 
 export default Dashboard;
-
-Dashboard.propTypes = {
-  config: PropTypes.object.isRequired,
-};

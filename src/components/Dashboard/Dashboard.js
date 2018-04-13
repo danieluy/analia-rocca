@@ -58,8 +58,7 @@ class Dashboard extends React.Component {
       .catch(err => handleBackendError(err));
   }
   render() {
-    if (this.state.user) {
-      console.log('this.state.collections', this.state.collections);
+    if (this.state.user)
       return (
         <Container>
           <h1>Dashboard</h1>
@@ -77,7 +76,6 @@ class Dashboard extends React.Component {
           <InputCollection />
         </Container>
       );
-    }
     return (
       <Container>
         <button onClick={this.signInWithGogle}>Sign In With Google</button>

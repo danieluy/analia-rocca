@@ -40,35 +40,18 @@ router.get('/collections', isAuthenticated, (req, res) => {
     );
 });
 
-// const populateCollections = collections =>
-//   Promise.all(collections
-//     .map((collection, i) => new Promise((resolve, reject) => {
-//       if (typeof firebase !== 'undefined')
-//         firebase.database().ref('documents')
-//           .orderByChild('collection')
-//           .equalTo(i)
-//           .once(
-//             'value',
-//             (snapshot) => {
-//               let photos = snapshot.val();
-//               if (!Array.prototype.isPrototypeOf(photos))
-//                 photos = Object.entries(photos).map(photo => photo[1]); // when firebase collection has only one item
-//               resolve(Object.assign({}, collection, { photos }));
-//             },
-//             err => reject(err)
-//           );
-//       else
-//         handleBackendError(FIREBASE_UNAVAILABLE);
-//     })));
-
-
-const collectionUpload = multer({ dest: 'public/photos/' });
+const collectionUpload = multer({ dest: 'public/img/' });
 router.post('/collection', isAuthenticated, collectionUpload.array('photo'), (req, res) => {
-  req.body = JSON.parse(req.body.json);
+  try {
+    req.body = JSON.parse(req.body.json);
+  }
+  catch (error) {
+    return res.status(400).json({ message: 'Incorrect JSON data on body' });
+  }
   if (!req.body)
     return res.status(400).json({ message: 'Missing JSON data on body' });
-  console.log(req.files.map(file => new Photo(file)));
-  res.sendStatus(200);
+  // const photos = req.files.map(file => new Photo(Object.assign({}, file, req.json)));
+  res.status(200).json(req.files);
 });
 
 module.exports = router;

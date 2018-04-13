@@ -5,7 +5,6 @@ class Photo extends Model {
     super();
     this.filename = file.filename;
     this.destination = file.destination;
-    this.fieldname = file.fieldname;
     this.originalname = file.originalname;
     this.encoding = file.encoding;
     this.mimetype = file.mimetype;

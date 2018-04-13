@@ -9,9 +9,12 @@ class InputCollection extends React.Component {
     super();
     this.state = {
       title: null,
-      files: null
+      files: null,
+      previews: null
     };
     this.addCollection = this.addCollection.bind(this);
+    this.getPreviews = this.getPreviews.bind(this);
+    this.handleFilesInput = this.handleFilesInput.bind(this);
   }
   addCollection() {
     postCollection(this.state)
@@ -21,13 +24,35 @@ class InputCollection extends React.Component {
       }, this.props.done()))
       .catch(handleBackendError);
   }
+  getPreviews() {
+    Promise.all(this.state.files.map(file => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = e => resolve({ src: e.target.result, alt: 'Preview' });
+      reader.onerror = err => reject(err);
+      reader.readAsDataURL(file.pathOrBlob);
+    })))
+      .then(previews => this.setState({ previews }))
+      .catch(handleBackendError);
+  }
+  handleFilesInput(files) {
+    this.setState({ files }, this.getPreviews);
+  }
   render() {
     console.log('InputCollection', this.state);
+    const { previews } = this.state;
     return (
       <div>
         Nueva Colección
         <input type="text" placeholder="Titulo" value={this.state.title || ''} onChange={evt => this.setState({ title: evt.target.value })} />
-        <InputFiles onChange={files => this.setState({ files })} />
+        <InputFiles
+          onChange={this.handleFilesInput}
+          fieldName="photo"
+        />
+        {previews && (
+          <div>
+            {previews.map((preview, i) => <img className="preview-image" key={i} src={preview.src} alt={preview.alt} />)}
+          </div>
+        )}
         <button onClick={this.addCollection}>Guardar</button>
       </div>
     );

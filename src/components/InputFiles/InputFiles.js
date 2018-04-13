@@ -26,7 +26,7 @@ class InputFiles extends React.PureComponent {
     }, this.handleInput);
   }
   handleInput() {
-    const { multiple, onChange } = this.props;
+    const { multiple, onChange, fieldName } = this.props;
     const { files } = this.state;
     if (!multiple && files.length > 1) {
       const errors = Object.assign({}, this.state.errors);
@@ -34,9 +34,9 @@ class InputFiles extends React.PureComponent {
       this.setState({ errors });
     }
     else if (multiple)
-      onChange(files);
+      onChange(files.map(file => ({ fieldName, pathOrBlob: file })));
     else
-      onChange(files[0]);
+      onChange({ fieldName, pathOrBlob: files[0] });
   }
   handleOnChange(evt) {
     evt.preventDefault();
@@ -87,7 +87,8 @@ export default InputFiles;
 InputFiles.propTypes = {
   multiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  errors: PropTypes.object
+  errors: PropTypes.object,
+  fieldName: PropTypes.string.isRequired
 };
 
 InputFiles.defaultProps = {

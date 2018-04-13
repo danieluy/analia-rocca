@@ -28,38 +28,23 @@ const getCollections = () =>
 
 const postCollection = ({ title, files }) =>
   new Promise((resolve, reject) => {
+    console.log('files', files);
     const token = getToken();
     if (!token)
       return requestCanceled(reject, 'Request canceled for missing token');
     const req = request.post('/api/collection')
-      .set('Authorization', `Bearer ${token}`)
-      .end((err, res) => {
-        if (err)
-          reject(err);
-        else
-          resolve(res.body);
-      });
+      .set('Authorization', `Bearer ${token}`);
+    files.forEach((file) => {
+      req.attach(file.fieldName, file.pathOrBlob);
+    });
+    req.field('json', JSON.stringify({ title }));
+    req.end((err, res) => {
+      if (err)
+        reject(err);
+      else
+        resolve(res.body);
+    });
   });
-
-function addRecord(record, commisionId) {
-  if (record.files)
-    return new Promise((resolve, reject) => {
-      const req = request.post('/api/record/')
-      record.files.forEach((file) => {
-        req.attach(file.name, file.pathOrBlob)
-      })
-      const recordWithoutFiles = Object.assign({}, record, { commisionId })
-      delete recordWithoutFiles.files
-      req.field('json', JSON.stringify(recordWithoutFiles))
-      req.end((err, res) => {
-        if (err)
-          reject(err)
-        else
-          resolve(res.body)
-      })
-    })
-  return Promise.reject(new Error('Files cannot be undefined'))
-}
 
 export {
   verifyGoogleId,

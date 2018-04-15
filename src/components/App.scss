@@ -55,12 +55,20 @@ html {
     }
 }
 
+.card{
+    background-color: #FFF;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+    padding: 10px;
+}
+
 @import './Container/Container';
 @import './Navbar/Navbar';
 @import './Home/Home';
 @import './InputFiles/InputFiles';
 @import './Collection/Collection';
 @import './InputCollection/InputCollection';
+@import './InputDocument/InputDocument';
 
 /*@media screen and (max-width: 1200px){ }*/
 

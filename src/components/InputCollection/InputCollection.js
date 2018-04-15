@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import InputFiles from '../InputFiles/InputFiles';
+import InputDocument from '../InputDocument/InputDocument';
 import { postCollection } from '../../backend';
 import { handleBackendError } from '../../utils';
 
@@ -50,7 +51,11 @@ class InputCollection extends React.Component {
         />
         {previews && (
           <div>
-            {previews.map((preview, i) => <img className="preview-image" key={i} src={preview.src} alt={preview.alt} />)}
+            {previews.map((preview, i) => (
+              <InputDocument key={i}>
+                <img className="preview-image" src={preview.src} alt={preview.alt} />
+              </InputDocument>
+            ))}
           </div>
         )}
         <button onClick={this.addCollection}>Guardar</button>

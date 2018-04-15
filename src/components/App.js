@@ -35,6 +35,7 @@ class App extends Component {
         <Switch>
           <Route path="/" exact render={() => <Home config={config} window={this.state.window} />} />
           <Route path="/dashboard" render={() => <Dashboard config={config} window={this.state.window} />} />
+          <Route render={() => <h1>404</h1>} />
         </Switch>
       </div>
     );

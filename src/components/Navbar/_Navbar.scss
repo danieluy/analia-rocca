@@ -3,9 +3,6 @@
     position: fixed;
     z-index: 1000;
     pointer-events: none;
-    * {
-        pointer-events: initial;
-    }
 }
 
 .menu-icon-wrapper {
@@ -42,11 +39,33 @@
     width: $navbar-width;
     height: 100%;
     padding-top: $navbar-height;
-    background-color: #FFF;
-    box-shadow: 2px 0 4px 0 rgba(0, 0, 0, 0.25);
-    transition: left 300ms ease-out;
+    transition: left 400ms ease-out;
+}
+
+.menu-icon-wrapper,
+.menu-title-wrapper,
+.nav-link {
+    pointer-events: initial;
 }
 
 .nav-links.hidden {
     left: -$navbar-width;
+}
+
+.nav-links-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.75);
+    opacity: 1;
+    pointer-events: initial;
+    transition: opacity 300ms ease-out;
+}
+
+.nav-links-background.hidden {
+    opacity: 0;
+    pointer-events: none;
 }

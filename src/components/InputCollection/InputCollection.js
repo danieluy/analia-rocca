@@ -58,7 +58,7 @@ class InputCollection extends React.Component {
             ))}
           </div>
         )}
-        <button onClick={this.addCollection}>Guardar</button>
+        <button className="button-ok" onClick={this.addCollection}>Guardar</button>
       </div>
     );
   }

@@ -4,8 +4,11 @@ $grey200: #EEEEEE;
 $grey300: #E0E0E0;
 $grey500: #9E9E9E;
 $grey700: #616161;
+$blue: #0057e7;
 $primary-color: #009688;
 $accent-color: #FF7043;
+$background-color: $grey50;
+$dark-text-color: $grey500;
 $warning: #689F38;
 $error: #F44336;
 $navbar-width: 300px;
@@ -14,7 +17,7 @@ html {
     font-size: 16px;
     font-weight: 400;
     font-family: 'Roboto', 'FreeSans', Helvetica, Arial, sans-serif;
-    background-color: $grey50;
+    background-color: $background-color;
 }
 
 * {
@@ -23,53 +26,40 @@ html {
     box-sizing: border-box;
 }
 
-.app-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    img {
-        width: 50%;
-    }
-    h1 {
-        font-size: 2rem;
-        text-align: center;
-        padding: 15px;
-        color: $grey500;
-        a {
-            color: #61DAFB;
-            font-weight: 500;
-            text-decoration: none;
-        }
-    }
-    p {
-        a {
-            color: #C69;
-            font-weight: 500;
-            text-decoration: none;
-        }
-        strong {
-            color: $grey500;
-            font-weight: 500;
-        }
-    }
-}
-
-.card{
+.card {
     background-color: #FFF;
     border-radius: 4px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
     padding: 10px;
 }
 
+.button-ok {
+    font-size: 1rem;
+    padding: 1rem;
+    border-style: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+    background-color: $background-color;
+    color: $dark-text-color;
+    transition: box-shadow 150ms linear;
+    cursor: pointer;
+    text-transform: uppercase;
+    &:hover {
+        box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.5);
+    }
+    &:active {
+        box-shadow: none;
+    }
+}
+
 @import './Container/Container';
 @import './Navbar/Navbar';
 @import './Home/Home';
+@import './Dashboard/Dashboard';
 @import './InputFiles/InputFiles';
 @import './Collection/Collection';
 @import './InputCollection/InputCollection';
 @import './InputDocument/InputDocument';
-
 /*@media screen and (max-width: 1200px){ }*/
 
 /*@media screen and (max-width: 960px){ }*/

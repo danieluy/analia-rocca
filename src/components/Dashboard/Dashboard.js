@@ -62,7 +62,7 @@ class Dashboard extends React.Component {
       return (
         <Container>
           <h1>Dashboard</h1>
-          <button onClick={this.signOutOfGogle}>Sign Out Of Google</button>
+          <button className="sign-in-button" onClick={this.signOutOfGogle}>Sign Out Of Google</button>
           <h2>Collections</h2>
           {this.state.collections
             ? this.state.collections.map(collection => (
@@ -78,7 +78,7 @@ class Dashboard extends React.Component {
       );
     return (
       <Container>
-        <button onClick={this.signInWithGogle}>Sign In With Google</button>
+        <button className="sign-in-button" onClick={this.signInWithGogle}>Sign In With Google</button>
       </Container>
     );
   }

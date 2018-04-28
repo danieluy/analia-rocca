@@ -10,7 +10,7 @@ module.exports = (env) => {
     },
     output: {
       filename: '[name].js',
-      path: path.join(__dirname, '/public/js/'),
+      path: path.join(__dirname, '/public/'),
     },
     module: {
       loaders: [
@@ -49,16 +49,15 @@ module.exports = (env) => {
           exclude: /(node_modules|bower_components)/,
           test: /\.jsx?$/,
           query: {
-            presets: ['env', 'react']
+            presets: ['stage-2', 'env', 'react']
           }
         },
       ]
     }
   };
-  if (env.development) {
+  if (env.development)
     config.devtool = 'inline-source-map';
-  }
-  if (env.production) {
+  if (env.production)
     config.plugins = [
       new webpack.DefinePlugin({
         'process.env': {
@@ -67,6 +66,5 @@ module.exports = (env) => {
       }),
       new UglifyJsPlugin({})
     ];
-  }
   return config;
 };

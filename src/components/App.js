@@ -2,10 +2,19 @@ import React, { Component } from 'react';
 import './App.scss';
 import debounce from 'lodash/debounce';
 import { Switch, Route } from 'react-router-dom';
+import Loadable from 'react-loadable';
 import Navbar from './Navbar/Navbar';
 import Home from './Home/Home';
-import Dashboard from './Dashboard/Dashboard';
 import config from '../../config/';
+
+const Dashboard = Loadable({
+  loader: () => import('./Dashboard/Dashboard'),
+  loading: () => <div>Loading Dashboard...</div>
+});
+const NotFound = Loadable({
+  loader: () => import('./NotFound/NotFound'),
+  loading: () => <div>NotFound</div>
+});
 
 class App extends Component {
   constructor() {
@@ -30,12 +39,12 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="app">
         <Navbar config={config} window={this.state.window} />
         <Switch>
           <Route path="/" exact render={() => <Home config={config} window={this.state.window} />} />
           <Route path="/dashboard" render={() => <Dashboard config={config} window={this.state.window} />} />
-          <Route render={() => <h1>404</h1>} />
+          <Route component={NotFound} />
         </Switch>
       </div>
     );

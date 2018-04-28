@@ -1,30 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import DocumentInfo from './DocumentInfo';
 import InputFiles from '../InputFiles/InputFiles';
 import { handleBackendError } from '../../utils';
-
-const DocumentInfo = ({ preview }) => (
-  <div className="document-info">
-    {/* <div className="preview"> */}
-      {preview}
-    {/* </div> */}
-    <div className="form">
-      <input type="text" placeholder="Título" />
-      <input type="text" placeholder="Descripción" />
-      <input type="date" placeholder="Año" />
-      <input type="number" placeholder="Ancho" />
-      <input type="number" placeholder="Largo" />
-      <input type="number" placeholder="Altura" />
-      <select>
-        <option value="silver">Plata</option>
-        <option value="gold">Oro</option>
-      </select>
-    </div>
-  </div>
-);
-DocumentInfo.propTypes = {
-  preview: PropTypes.element.isRequired
-};
 
 class InputDocument extends React.Component {
   constructor() {
@@ -48,8 +26,19 @@ class InputDocument extends React.Component {
       .then(previews => this.setState({ previews }))
       .catch(handleBackendError);
   }
+  removeFileAndPreview(index) {
+    const previews = this.state.previews.slice();
+    const files = this.state.files.slice();
+    const previewsRemoved = previews.splice(index, 1);
+    const filesRemoved = files.splice(index, 1);
+    this.setState({
+      files: files.length ? files : null,
+      previews
+    });
+  }
   render() {
     const { files, previews } = this.state;
+    const { done } = this.props;
     return (
       <div className="input-document">
         {!files && (
@@ -62,13 +51,19 @@ class InputDocument extends React.Component {
           <div className="document-previews">
             {previews.map((preview, i) => (
               <DocumentInfo
-                key={i}
+                key={preview.src}
+                index={i}
                 preview={<img className="preview-image" src={preview.src} alt={preview.alt} />}
+                onRemove={(index) => { this.removeFileAndPreview(index); }}
               />
             ))}
           </div>
         )}
-      </div>
+        <div className="toolbar right">
+          <button onClick={done} className="button ok" style={{ marginRight: '1rem' }}>Upload</button>
+          <button onClick={done} className="button cancel">Cancel</button>
+        </div>
+      </div >
     );
   }
 }

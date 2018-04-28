@@ -1,5 +1,7 @@
 /* global firebase */
 import { handleBackendError } from './utils';
+import { verifyGoogleId } from './backend';
+import events from './events';
 
 const FIREBASE_UNAVAILABLE = {
   status: 400,
@@ -43,7 +45,30 @@ const populateCollections = collections =>
         handleBackendError(FIREBASE_UNAVAILABLE);
     })));
 
+firebase.auth().onAuthStateChanged(user => events.emit('FIREBASE_AUTH_STATE_CHANGED', user));
+
+const signInWithGogle = () => {
+  const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+  return firebase.auth().signInWithPopup(googleAuthProvider)
+    .then(() => firebase.auth().currentUser.getIdToken(true))
+    .then(idToken => verifyGoogleId(idToken))
+    .then(jWToken => window.localStorage.setItem('AR_JWTOKEN', JSON.stringify(jWToken)))
+    .catch(err => handleBackendError(err));
+};
+
+const signOutOfGogle = () => {
+  firebase.auth().signOut()
+    .then(() => {
+      console.info('Signed Out');
+      window.localStorage.removeItem('AR_JWTOKEN');
+    }, (error) => {
+      console.error('Sign Out Error', error);
+    });
+};
+
 export {
   getCollections,
-  populateCollections
+  populateCollections,
+  signInWithGogle,
+  signOutOfGogle
 };

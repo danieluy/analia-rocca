@@ -50,15 +50,9 @@ class InputCollection extends React.Component {
           fieldName="photo"
         />
         {previews && (
-          <div>
-            {previews.map((preview, i) => (
-              <InputDocument key={i}>
-                <img className="preview-image" src={preview.src} alt={preview.alt} />
-              </InputDocument>
-            ))}
-          </div>
+
         )}
-        <button className="button-ok" onClick={this.addCollection}>Guardar</button>
+        <button className="button" onClick={this.addCollection}>Guardar</button>
       </div>
     );
   }

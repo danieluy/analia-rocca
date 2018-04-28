@@ -5,7 +5,7 @@
     pointer-events: none;
 }
 
-.navbar-header{
+.navbar-header {
     position: fixed;
     height: $navbar-height;
     width: 100%;
@@ -20,7 +20,7 @@
     width: $navbar-height;
     height: $navbar-height;
     padding: 15px;
-    border-style: none; 
+    border-style: none;
     background-color: transparent;
     cursor: pointer;
 }
@@ -56,8 +56,7 @@
 .nav-link {
     pointer-events: initial;
     display: block;
-    height: $navbar-height;
-    // line-height: $navbar-height;
+    height: $navbar-height; // line-height: $navbar-height;
 }
 
 .nav-link {
@@ -92,4 +91,12 @@
 .nav-links-background.hidden {
     opacity: 0;
     pointer-events: none;
+}
+
+.sign-out-button {
+    @extend .button;
+    width: 100%;
+    background-color: $blue;
+    color: #FFF;
+    pointer-events: initial;
 }

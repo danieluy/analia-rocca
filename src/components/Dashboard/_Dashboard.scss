@@ -1,8 +1,6 @@
-.sign-in-button{
-  background-color: $blue;
-  color: $grey50;
-  padding: 15px;
-  border-style: none;
-  border-radius: 4px;
-  cursor: pointer;
+.sign-in-button {
+    @extend .button;
+    width: 100%;
+    background-color: $blue;
+    color: #FFF;
 }

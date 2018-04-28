@@ -1,68 +1,47 @@
-/* global firebase */
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { verifyGoogleId, getCollections } from '../../backend';
+import { getCollections } from '../../backend';
 import Container from '../Container/Container';
 import CollectionList from '../Collection/CollectionList';
+import InputDocument from '../InputDocument/InputDocument';
 import { handleBackendError } from '../../utils';
-import InputCollection from '../InputCollection/InputCollection';
+import * as firebase from '../../firebase';
+import events from '../../events';
 
 class Dashboard extends React.Component {
   constructor() {
     super();
     this.state = {
       user: null,
-      collections: null
+      collections: null,
+      addDocumentOpen: false
     };
-    this.signInWithGogle = this.signInWithGogle.bind(this);
-    this.listenForAuthStateChanges = this.listenForAuthStateChanges.bind(this);
-    this.signOutOfGogle = this.signOutOfGogle.bind(this);
     this.getCollectionsFromBackend = this.getCollectionsFromBackend.bind(this);
   }
   componentDidMount() {
-    this.listenForAuthStateChanges();
-    this.getCollectionsFromBackend();
-  }
-  listenForAuthStateChanges() {
-    firebase.auth().onAuthStateChanged((user) => {
+    events.on('FIREBASE_AUTH_STATE_CHANGED', (user) => {
       this.setState({ user }, () => {
         if (!user)
           window.localStorage.removeItem('AR_JWTOKEN');
       });
     });
+    this.getCollectionsFromBackend();
   }
   getCollectionsFromBackend() {
     getCollections()
       .then(collections => this.setState({ collections }))
       .catch(err => handleBackendError(err));
   }
-  signInWithGogle() {
-    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(googleAuthProvider)
-      .then(data => this.verifyGoogleIdToken())
-      .catch(err => console.error(err));
-  }
-  signOutOfGogle() {
-    firebase.auth().signOut()
-      .then(() => {
-        console.log('Signed Out');
-        window.localStorage.removeItem('AR_JWTOKEN');
-      }, (error) => {
-        console.error('Sign Out Error', error);
-      });
-  }
-  verifyGoogleIdToken() {
-    firebase.auth().currentUser.getIdToken(true)
-      .then(idToken => verifyGoogleId(idToken))
-      .then(jWToken => window.localStorage.setItem('AR_JWTOKEN', JSON.stringify(jWToken)))
-      .catch(err => handleBackendError(err));
-  }
   render() {
-    if (this.state.user)
+    if (this.state.user) {
+      const { addDocumentOpen } = this.state;
       return (
         <Container>
           <h1>Dashboard</h1>
-          <button className="sign-in-button" onClick={this.signOutOfGogle}>Sign Out Of Google</button>
+          {!addDocumentOpen
+            ? <button className="button" onClick={() => this.setState({ addDocumentOpen: true })}>Add Documents</button>
+            : <InputDocument done={() => this.setState({ addDocumentOpen: false })} />
+          }
           <h2>Collections</h2>
           {this.state.collections
             ? this.state.collections.map(collection => (
@@ -73,12 +52,13 @@ class Dashboard extends React.Component {
             ))
             : <h4>Loading...</h4>
           }
-          <InputCollection />
+
         </Container>
       );
+    }
     return (
       <Container>
-        <button className="sign-in-button" onClick={this.signInWithGogle}>Sign In With Google</button>
+        <button className="sign-in-button" onClick={firebase.signInWithGogle}>Sign In With Google</button>
       </Container>
     );
   }

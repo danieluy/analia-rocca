@@ -3,16 +3,28 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { MenuIcon, HomeIcon, DashboardIcon } from '../../assets/icons';
 import { color } from '../../assets/styles';
+import * as firebase from '../../firebase';
+import events from '../../events';
 
 class Navbar extends React.Component {
   constructor() {
     super();
     this.state = {
-      open: false
+      open: false,
+      user: null
     };
+  }
+  componentDidMount() {
+    events.on('FIREBASE_AUTH_STATE_CHANGED', (user) => {
+      this.setState({ user }, () => {
+        if (!user)
+          window.localStorage.removeItem('AR_JWTOKEN');
+      });
+    });
   }
   render() {
     const { height } = this.props.window;
+    const { user } = this.state;
     return (
       <div id="navbar" style={{ height }}>
         <div className="navbar-header">
@@ -32,8 +44,9 @@ class Navbar extends React.Component {
             <DashboardIcon width={30} fill={color.grey700} />
             Dashboard
           </Link>
+          {user && <button className="sign-out-button" onClick={firebase.signOutOfGogle}>Sign Out Of Google</button>}
         </div>
-        <button onClick={() => this.setState({ open: !this.state.open })} className={`nav-links-background ${!this.state.open ? 'hidden' : ''}`} />
+        <button onClick={() => this.setState({ open: false })} className={`nav-links-background ${!this.state.open ? 'hidden' : ''}`} />
       </div>
     );
   }

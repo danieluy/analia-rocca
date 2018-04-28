@@ -1,6 +1,7 @@
-.input-document {
+.document-info {
     @extend .card;
     display: flex;
+    margin-bottom: 10px;
 }
 
 .preview {
@@ -16,6 +17,21 @@
     select {
         display: inline-block;
         width: 100%;
-        padding: 5px;
+        padding: 10px;
+        border-style: none;
+        background-color: transparent;
+        border-bottom: 1px solid $dark-text-color;
     }
+}
+
+.close-card-button{
+    @extend .button;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    font-size: 2rem;
+    padding: 0;
+    line-height: 32px;
+    color: $accent-color;
 }

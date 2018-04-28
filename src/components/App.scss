@@ -50,6 +50,22 @@ html {
     &:active {
         box-shadow: none;
     }
+    &.ok {
+        color: $primary-color
+    }
+    &.cancel {
+        color: $accent-color
+    }
+}
+
+.toolbar {
+    display: flex;
+    margin: 1rem 0;
+    width: 100%;
+    flex-shrink: 0;
+    &.right {
+        justify-content: flex-end;
+    }
 }
 
 @import './Container/Container';

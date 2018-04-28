@@ -1,7 +1,8 @@
 {
-  "verbose": true,
+  "verbose": false,
   "ignore": [
     "src/",
-    "public/"
+    "public/",
+    "node_modules/"
   ]
 }

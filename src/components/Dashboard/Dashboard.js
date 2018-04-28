@@ -16,16 +16,19 @@ class Dashboard extends React.Component {
       collections: null,
       addDocumentOpen: false
     };
+    this.updateAuthStatus = this.updateAuthStatus.bind(this);
     this.getCollectionsFromBackend = this.getCollectionsFromBackend.bind(this);
   }
   componentDidMount() {
-    events.on('FIREBASE_AUTH_STATE_CHANGED', (user) => {
-      this.setState({ user }, () => {
-        if (!user)
-          window.localStorage.removeItem('AR_JWTOKEN');
-      });
-    });
+    this.updateAuthStatus();
     this.getCollectionsFromBackend();
+    events.on('AUTH_STATE_CHANGED', this.updateAuthStatus);
+    events.on('AUTH_STATE_CHANGED', this.getCollectionsFromBackend);
+  }
+  updateAuthStatus() {
+    this.setState({
+      user: firebase.getCurrentUser()
+    });
   }
   getCollectionsFromBackend() {
     getCollections()

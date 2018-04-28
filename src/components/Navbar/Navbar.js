@@ -13,13 +13,15 @@ class Navbar extends React.Component {
       open: false,
       user: null
     };
+    this.updateAuthStatus = this.updateAuthStatus.bind(this);
   }
   componentDidMount() {
-    events.on('FIREBASE_AUTH_STATE_CHANGED', (user) => {
-      this.setState({ user }, () => {
-        if (!user)
-          window.localStorage.removeItem('AR_JWTOKEN');
-      });
+    this.updateAuthStatus();
+    events.on('AUTH_STATE_CHANGED', this.updateAuthStatus);
+  }
+  updateAuthStatus() {
+    this.setState({
+      user: firebase.getCurrentUser()
     });
   }
   render() {
@@ -44,7 +46,9 @@ class Navbar extends React.Component {
             <DashboardIcon width={30} fill={color.grey700} />
             Dashboard
           </Link>
-          {user && <button className="sign-out-button" onClick={firebase.signOutOfGogle}>Sign Out Of Google</button>}
+          {user &&
+            <button className="sign-out-button" onClick={firebase.signOutOfGogle}>Sign Out Of Google</button>
+          }
         </div>
         <button onClick={() => this.setState({ open: false })} className={`nav-links-background ${!this.state.open ? 'hidden' : ''}`} />
       </div>

@@ -1,0 +1,40 @@
+.document-info {
+    @extend .card;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.preview {
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+    padding: 10px;
+}
+
+.form {
+    padding: 10px;
+    input,
+    select {
+        display: inline-block;
+        width: 100%;
+        padding: 10px;
+        border-style: none;
+        background-color: transparent;
+        transition: background-color 200ms;
+        &:hover {
+            background-color: $grey200;
+        }
+    }
+}
+
+.close-card-button {
+    @extend .button;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    font-size: 2rem;
+    padding: 0;
+    line-height: 32px;
+    color: $accent-color;
+}

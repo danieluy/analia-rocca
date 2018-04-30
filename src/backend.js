@@ -26,9 +26,8 @@ const getCollections = () =>
       });
   });
 
-const postCollection = ({ title, files }) =>
+const postDocuments = ({ files, filesInfo }) =>
   new Promise((resolve, reject) => {
-    console.log('files', files);
     const token = getToken();
     if (!token)
       return requestCanceled(reject, 'Request canceled for missing token');
@@ -37,7 +36,7 @@ const postCollection = ({ title, files }) =>
     files.forEach((file) => {
       req.attach(file.fieldName, file.pathOrBlob);
     });
-    req.field('json', JSON.stringify({ title }));
+    req.field('json', JSON.stringify(filesInfo));
     req.end((err, res) => {
       if (err)
         reject(err);
@@ -49,7 +48,7 @@ const postCollection = ({ title, files }) =>
 export {
   verifyGoogleId,
   getCollections,
-  postCollection
+  postDocuments
 };
 
 function getToken() {

@@ -37,6 +37,7 @@
         "react/sort-comp": 0,
         "jsx-a11y/anchor-is-valid": 0,
         "no-new": 0,
-        "arrow-parens": "warn"
+        "arrow-parens": "warn",
+        "object-curly-newline": 0
     }
 }

@@ -1,8 +1,8 @@
 {
-  "name": "reactboilerplate",
+  "name": "analiarocca",
   "version": "0.1.0",
   "description": "React.js Boilerplate",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
     "react": "webpack --env.development --watch",

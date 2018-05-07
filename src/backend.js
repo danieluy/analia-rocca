@@ -31,8 +31,8 @@ const postDocuments = ({ files, filesInfo }) =>
     const token = getToken();
     if (!token)
       return requestCanceled(reject, 'Request canceled for missing token');
-    const req = request.post('/api/collection')
-      .set('Authorization', `Bearer ${token}`);
+    const req = request.post('/api/documents')
+    req.set('Authorization', `Bearer ${token}`);
     files.forEach((file) => {
       req.attach(file.fieldName, file.pathOrBlob);
     });

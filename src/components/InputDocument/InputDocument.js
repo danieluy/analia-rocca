@@ -18,18 +18,19 @@ class InputDocument extends React.Component {
     this.handleDocumentInfoInput = this.handleDocumentInfoInput.bind(this);
   }
   handleDocumentInfoInput(index, info) {
-    console.log(index, info);
     const previews = cloneDeep(this.state.previews);
     previews[index] = Object.assign(previews[index], { info });
     this.setState({ previews });
   }
   uploadFiles() {
-    const { files, filesInfo } = this.state;
+    const { files, previews } = this.state;
+    console.log('previews', previews);
+    console.log('files', files);
     // TODO: improve alert
-    if (!files || !files.length || !filesInfo)
+    if (!files || !files.length || !previews)
       return alert('Select a file');
-    postDocuments({ files, filesInfo })
-      .then(res => console.log(res))
+    postDocuments({ files, filesInfo: previews.map(preview => preview.info) })
+      .then(res => console.log('postDocuments', res))
       .catch(handleBackendError);
   }
   handleFilesInput(files) {
@@ -48,11 +49,11 @@ class InputDocument extends React.Component {
   removeFileAndPreview(index) {
     const previews = this.state.previews.slice();
     const files = this.state.files.slice();
-    const previewsRemoved = previews.splice(index, 1);
-    const filesRemoved = files.splice(index, 1);
+    /* const removedPreviews = */ previews.splice(index, 1);
+    /* const removedFiles = */ files.splice(index, 1);
     this.setState({
       files: files.length ? files : null,
-      previews
+      previews: previews.length ? previews : null
     });
   }
   render() {

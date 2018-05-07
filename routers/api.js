@@ -40,18 +40,28 @@ router.get('/collections', isAuthenticated, (req, res) => {
     );
 });
 
-const collectionUpload = multer({ dest: 'public/img/' });
-router.post('/collection', isAuthenticated, collectionUpload.array('photo'), (req, res) => {
+const documentsUpload = multer({ dest: 'public/img/' });
+router.post('/documents', isAuthenticated, documentsUpload.array('photo'), (req, res) => {
+  if (!req.body || !req.body.json)
+    return res.status(400).json({ message: 'Missing JSON data on body' });
   try {
-    req.body = JSON.parse(req.body.json);
+    req.body.json = JSON.parse(req.body.json);
   }
   catch (error) {
     return res.status(400).json({ message: 'Incorrect JSON data on body' });
   }
-  if (!req.body)
-    return res.status(400).json({ message: 'Missing JSON data on body' });
-  // const photos = req.files.map(file => new Photo(Object.assign({}, file, req.json)));
-  res.status(200).json(req.files);
+  const documents = req.files.map((file, i) => {
+    const fileType = file.mimetype.split('/')[0];
+    if (fileType === 'image')
+      return new Photo(Object.assign(file, req.body.json[i]));
+    return null;
+  });
+  Promise.all(documents.map(doc => doc.save()))
+    .then(() => res.status(200).json(documents.map(doc => doc.getFieldValues())))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: 'Unable to save documents to Firebase' });
+    });
 });
 
 module.exports = router;

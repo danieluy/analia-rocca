@@ -24,11 +24,15 @@ class InputDocument extends React.Component {
   }
   uploadFiles() {
     const { files, previews } = this.state;
+    const { done } = this.props;
     // TODO improve alert
     if (!files || !files.length || !previews)
       return alert('Select a file');
     postDocuments({ files, filesInfo: previews.map(preview => preview.info) })
-      .then(res => console.log('postDocuments', res))
+      .then((res) => {
+        console.log('postDocuments', res);
+        done();
+      })
       .catch(handleBackendError);
   }
   handleFilesInput(files) {

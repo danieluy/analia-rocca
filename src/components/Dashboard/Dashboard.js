@@ -43,7 +43,7 @@ class Dashboard extends React.Component {
           <h1>Dashboard</h1>
           {!addDocumentOpen
             ? <button className="button" onClick={() => this.setState({ addDocumentOpen: true })}>Add Documents</button>
-            : <InputDocument done={() => this.setState({ addDocumentOpen: false })} />
+            : <InputDocument done={() => this.setState({ addDocumentOpen: false })} /> // TODO update list when done
           }
           <h2>Collections</h2>
           {this.state.collections

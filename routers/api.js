@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const Photo = require('../models/Photo');
+const Document = require('../models/Document');
 const { isAuthenticated } = require('./middleware');
 
 router.get('/collections', isAuthenticated, (req, res) => {
@@ -50,13 +51,18 @@ router.post('/documents', isAuthenticated, documentsUpload.array('photo'), (req,
   catch (error) {
     return res.status(400).json({ message: 'Incorrect JSON data on body' });
   }
-  const documents = req.files.map((file, i) => {
-    const fileType = file.mimetype.split('/')[0];
-    if (fileType === 'image')
-      return new Photo(Object.assign(file, req.body.json[i]));
-    return null;
-  });
-  Promise.all(documents.map(doc => doc.save()))
+  const documents = req.files
+    .map((file, i) => {
+      switch (file.mimetype.split('/')[0]) {
+        case 'image':
+          return new Photo(Object.assign(file, req.body.json[i]));
+        default:
+          return null;
+      }
+    })
+    .filter(doc => !!doc);
+
+  Document.saveMany(documents)
     .then(() => res.status(200).json(documents.map(doc => doc.getFieldValues())))
     .catch((err) => {
       console.error(err);

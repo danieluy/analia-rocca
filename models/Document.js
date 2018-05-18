@@ -14,13 +14,12 @@ class Model {
     this.size = file.size;
   }
   save() {
-    // TODO fix a gub where the last place gets replaced because the next save starts bejore firebase updates
     return new Promise((resolve, reject) => {
       const ref = this.firebaseAdmin.database().ref('documents');
       ref.once('value', (snapshot) => {
         const nextPos = snapshot.val().length;
         ref.update({ [`/${nextPos}`]: this.getFieldValues() })
-          .then(() => resolve())
+          .then(() => resolve(this.getFieldValues()))
           .catch(err => reject(err));
       });
     });
@@ -35,6 +34,22 @@ class Model {
       path: this.path,
       size: this.size
     };
+  }
+  static saveMany(documents) {
+    return new Promise((resolve, reject) => {
+      const ref = firebaseAdmin.database().ref('documents');
+      ref.once('value', (snapshot) => {
+        const startPos = snapshot.val().length;
+        const updates = documents.reduce((listOfUpdates, doc, i) => {
+          const aux = Object.assign({}, listOfUpdates);
+          aux[startPos + i] = doc.getFieldValues();
+          return aux;
+        }, {});
+        ref.update(updates)
+          .then(() => resolve())
+          .catch(err => reject(err));
+      });
+    });
   }
 }
 

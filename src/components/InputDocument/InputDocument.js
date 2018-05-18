@@ -24,9 +24,7 @@ class InputDocument extends React.Component {
   }
   uploadFiles() {
     const { files, previews } = this.state;
-    console.log('previews', previews);
-    console.log('files', files);
-    // TODO: improve alert
+    // TODO improve alert
     if (!files || !files.length || !previews)
       return alert('Select a file');
     postDocuments({ files, filesInfo: previews.map(preview => preview.info) })

@@ -5,6 +5,7 @@ import { MenuIcon, HomeIcon, DashboardIcon } from '../../assets/icons';
 import { color } from '../../assets/styles';
 import * as firebase from '../../firebase';
 import events from '../../events';
+import Logo from '../Branding/Logo';
 
 class Navbar extends React.Component {
   constructor() {
@@ -50,7 +51,9 @@ class Navbar extends React.Component {
             <button className="sign-out-button" onClick={firebase.signOutOfGogle}>Sign Out Of Google</button>
           }
         </div>
-        <button onClick={() => this.setState({ open: false })} className={`nav-links-background ${!this.state.open ? 'hidden' : ''}`} />
+        <button onClick={() => this.setState({ open: false })} className={`nav-links-background ${!this.state.open ? 'hidden' : ''}`}>
+          <Logo animated={this.state.open} />
+        </button>
       </div>
     );
   }

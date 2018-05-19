@@ -4,7 +4,7 @@
 <head>
   <meta charset='utf-8'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Analia Rocca</title>
+  <title>joy!</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
   <script>
@@ -25,6 +25,15 @@
 <body>
   <div id="root"></div>
   <script src="/bundle.js"></script>
+  <script>
+    // Check for browser support of service worker
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.register('/sw.js')
+        .then((registration) => console.info('Service Worker registration successful, scope is:', registration.scope))
+        .catch((err) => console.info('Service Worker registration failed, error:', err));
+    else
+      console.info('Service Workers are not upported in this browser.');
+  </script>
 </body>
 
 </html>

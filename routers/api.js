@@ -61,7 +61,6 @@ router.post('/documents', isAuthenticated, documentsUpload.array('photo'), (req,
       }
     })
     .filter(doc => !!doc);
-
   Document.saveMany(documents)
     .then(() => res.status(200).json(documents.map(doc => doc.getFieldValues())))
     .catch((err) => {

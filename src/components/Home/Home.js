@@ -2,7 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Collection from '../Collection/Collection';
 import Container from '../Container/Container';
-import { getCollections, populateCollections } from '../../firebase';
+import events from '../../events';
+import {
+  getCollections,
+  populateCollections
+} from '../../firebase';
+import {
+  getLocalData,
+  setLocalData
+} from '../../local-storage';
 
 class Home extends React.Component {
   constructor() {
@@ -11,14 +19,25 @@ class Home extends React.Component {
       collections: null
     };
     this.fetchCollections = this.fetchCollections.bind(this);
+    this.loadLocalData = this.loadLocalData.bind(this);
   }
   componentDidMount() {
+    events.on('LOCAL_DATA_UPDATED', this.loadLocalData);
+    this.loadLocalData();
     this.fetchCollections();
+  }
+  componentWillUnmount() {
+    events.off('LOCAL_DATA_UPDATED', this.loadLocalData);
+  }
+  loadLocalData() {
+    const data = getLocalData();
+    if (data)
+      this.setState({ collections: data.collections });
   }
   fetchCollections() {
     getCollections()
       .then(collections => populateCollections(collections))
-      .then(collections => this.setState({ collections }))
+      .then(collections => setLocalData({ collections }))
       .catch(err => console.error(err));
   }
   render() {

@@ -1,0 +1,35 @@
+.wallpaper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-weight: 100;
+  p {
+    color: $grey700;
+    font-size: 5rem;
+    opacity: .05;
+    animation-name: pop;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+  }
+  span {
+    color: $grey500;
+  }
+}
+
+@keyframes pop {
+  0%{
+    color: $grey700;
+  }
+  75%{
+    color: #000;
+  }
+  100%{
+    color: $grey700;
+  }
+}

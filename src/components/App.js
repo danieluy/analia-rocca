@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import Navbar from './Navbar/Navbar';
 import Home from './Home/Home';
+import Wallpaper from './Branding/Wallpaper';
 import config from '../../config/';
 
 const Dashboard = Loadable({
@@ -38,6 +39,7 @@ class App extends Component {
     });
   }
   render() {
+    const { window } = this.state;
     return (
       <div className="app">
         <Navbar config={config} window={this.state.window} />
@@ -46,6 +48,7 @@ class App extends Component {
           <Route path="/dashboard" render={() => <Dashboard config={config} window={this.state.window} />} />
           <Route component={NotFound} />
         </Switch>
+        <Wallpaper width={window.width} height={window.height} />
       </div>
     );
   }

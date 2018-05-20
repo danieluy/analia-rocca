@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Gallery from '../Gallery/Gallery';
+import { translate } from '../../utils';
 
 class Collection extends React.PureComponent {
   constructor() {
@@ -11,7 +12,7 @@ class Collection extends React.PureComponent {
     const { title, photos } = this.props.collection;
     return (
       <div className="collection">
-        <h2>{title.es}</h2>
+        <h2>{translate(title)}</h2>
         <Gallery photos={photos} />
       </div>
     );

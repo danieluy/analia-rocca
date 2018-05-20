@@ -1,0 +1,21 @@
+.gallery {
+  .thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+.thumb-card {
+  @extend .card;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-style: none;
+  border-radius: .25rem;
+  margin-bottom: 15px;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+}

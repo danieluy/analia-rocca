@@ -14,58 +14,74 @@ $error: #F44336;
 $navbar-width: 300px;
 $navbar-height: 60px;
 html {
-    font-size: 16px;
-    font-weight: 400;
-    background-color: $background-color;
+  font-size: 16px;
+  font-weight: 100;
+  background-color: $background-color;
+  color: $grey700;
 }
 
 * {
-    font-family: 'Roboto', 'FreeSans', Helvetica, Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  font-family: 'Roboto', 'FreeSans', Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .card {
-    background-color: #FFF;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
-    padding: 10px;
+  background-color: #FFF;
+  border-radius: .25rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  .title {
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 3rem;
+    padding: 0 1rem;
+    text-transform: capitalize;
+    color: $grey700;
+  }
+  .body {
+    text-align: left;
+    padding: 1rem;
+    color: $grey500;
+    font-size: 1rem;
+  }
 }
 
 .button {
-    font-size: 1rem;
-    padding: 1rem;
-    border-style: none;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
-    background-color: $background-color;
-    color: $dark-text-color;
-    transition: box-shadow 150ms linear;
-    cursor: pointer;
-    text-transform: uppercase;
-    &:hover {
-        box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.5);
-    }
-    &:active {
-        box-shadow: none;
-    }
-    &.ok {
-        color: $primary-color
-    }
-    &.cancel {
-        color: $accent-color
-    }
+  font-size: 1rem;
+  padding: 1rem;
+  border-style: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: $background-color;
+  color: $dark-text-color;
+  transition: box-shadow 150ms linear;
+  cursor: pointer;
+  text-transform: uppercase;
+  &:hover {
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.5);
+  }
+  &:active {
+    box-shadow: none;
+  }
+  &.ok {
+    color: $primary-color
+  }
+  &.cancel {
+    color: $accent-color
+  }
 }
 
 .toolbar {
-    display: flex;
-    margin: 1rem 0;
-    width: 100%;
-    flex-shrink: 0;
-    &.right {
-        justify-content: flex-end;
-    }
+  display: flex;
+  margin: 1rem 0;
+  width: 100%;
+  flex-shrink: 0;
+  &.right {
+    justify-content: flex-end;
+  }
 }
 
 @import './Container/Container';
@@ -79,6 +95,7 @@ html {
 @import './InputDocument/DocumentInfo';
 @import './Branding/Logo';
 @import './Branding/Wallpaper';
+@import './Gallery/Gallery';
 /*@media screen and (max-width: 1200px){ }*/
 
 /*@media screen and (max-width: 960px){ }*/

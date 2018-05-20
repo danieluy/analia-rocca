@@ -4,6 +4,7 @@ import PhotoSwipe from 'photoswipe';
 import photoSwipeUIDefault from 'photoswipe/dist/photoswipe-ui-default';
 import 'photoswipe/dist/photoswipe.css';
 import 'photoswipe/dist/default-skin/default-skin.css';
+import cloneDeep from 'lodash/cloneDeep';
 
 class Carousel extends React.Component {
   constructor() {
@@ -13,8 +14,13 @@ class Carousel extends React.Component {
   }
   init() {
     const pswpElement = document.querySelectorAll('.pswp')[0];
-    console.log('this.props.photos', this.props.photos);
-    const items = this.props.photos;
+    const photosClone = cloneDeep(this.props.photos);
+    const items = photosClone.map((item) => {
+      item.alt = item.alt.es;
+      item.description = item.description.es;
+      item.title = item.title.es;
+      return item;
+    });
     const options = { index: this.props.index };
     const gallery = new PhotoSwipe(pswpElement, photoSwipeUIDefault, items, options);
     gallery.listen('close', () => {
@@ -24,8 +30,7 @@ class Carousel extends React.Component {
   }
   render() {
     return (
-      <div className="gallery">
-        <h1>Gallery</h1>
+      <div className="carousel">
         {/* Root element of PhotoSwipe. Must have class pswp. */}
         <div className="pswp" tabIndex="-1" role="dialog" aria-hidden="true" ref={this.init}>
 

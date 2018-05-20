@@ -1,7 +1,9 @@
 .collection {
   h2{
-    font-size: 1.5rem;
+    font-size: 3rem;
     font-weight: 100;
+    line-height: 6rem;
+    color: $grey700;
     text-transform: capitalize;
   }
 }

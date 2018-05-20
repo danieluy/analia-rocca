@@ -10,6 +10,7 @@ class Photo extends Document {
     this.material = file.material;
     this.title = file.title;
     this.width = file.width;
+    this.src = file.path.slice(7);
   }
   getFieldValues() {
     return Object.assign(super.getFieldValues(), {

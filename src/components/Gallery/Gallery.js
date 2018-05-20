@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Carousel from './Carousel';
+import ThumbCard from './ThumbCard';
 
 class Gallery extends React.PureComponent {
   constructor() {
@@ -11,8 +12,10 @@ class Gallery extends React.PureComponent {
       photos: null
     };
     this.findImagesDimensions = this.findImagesDimensions.bind(this);
+    this.fillRows = this.fillRows.bind(this);
+    this.getThumbWidth = this.getThumbWidth.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.findImagesDimensions()
       .then(photos => this.setState({ photos }))
       .catch(err => console.error(err));
@@ -28,19 +31,30 @@ class Gallery extends React.PureComponent {
       }))
       .filter(photo => !!photo));
   }
+  fillRows() {
+    const dummyThumbs = [];
+    for (let i = 0; i < this.state.photos.length % 4; i++)
+      dummyThumbs.push(<div key={`dummy-${i}`} style={{ width: this.getThumbWidth() }} />);
+    return dummyThumbs;
+  }
+  getThumbWidth() {
+    return (1200 - 45) / 4;
+  }
   render() {
     if (this.state.photos)
       return (
-        <div>
-          {this.state.photos.map((photo, i) => (
-            <button key={`galley-image-${i}`} onClick={() => this.setState({ open: true, index: i })} >
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                style={{ maxWidth: 200, maxHeight: 200 }}
+        <div className="gallery">
+          <div className="thumbnails">
+            {this.state.photos.map((photo, i) => (
+              <ThumbCard
+                key={`galley-image-${i}`}
+                onClick={() => this.setState({ open: true, index: i })}
+                photo={photo}
+                width={this.getThumbWidth()}
               />
-            </button>
-          ))}
+            ))}
+            {this.fillRows()}
+          </div>
           {this.state.open &&
             <Carousel
               photos={this.state.photos}

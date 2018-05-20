@@ -53,6 +53,7 @@ class Navbar extends React.Component {
         </div>
         <button onClick={() => this.setState({ open: false })} className={`nav-links-background ${!this.state.open ? 'hidden' : ''}`}>
           <Logo animated={this.state.open} />
+          <h3>Analia Rocca</h3>
         </button>
       </div>
     );

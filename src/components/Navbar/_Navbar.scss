@@ -1,102 +1,109 @@
 #navbar {
-    width: $navbar-width;
-    position: fixed;
-    z-index: 1000;
-    pointer-events: none;
+  width: $navbar-width;
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
 }
 
 .navbar-header {
-    position: fixed;
-    height: $navbar-height;
-    width: 100%;
-    z-index: 1002;
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  position: fixed;
+  height: $navbar-height;
+  width: 100%;
+  z-index: 1002;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
 .menu-icon-wrapper {
-    position: fixed;
-    z-index: 1002;
-    width: $navbar-height;
-    height: $navbar-height;
-    padding: 15px;
-    border-style: none;
-    background-color: transparent;
-    cursor: pointer;
+  position: fixed;
+  z-index: 1002;
+  width: $navbar-height;
+  height: $navbar-height;
+  padding: 15px;
+  border-style: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .menu-title-wrapper {
-    position: fixed;
-    z-index: 1002;
-    height: $navbar-height;
-    left: $navbar-height;
-    padding-left: 15px;
-    text-decoration: none;
+  position: fixed;
+  z-index: 1002;
+  height: $navbar-height;
+  left: $navbar-height;
+  padding-left: 15px;
+  text-decoration: none;
+  font-weight: 100;
+  h1 {
+    line-height: $navbar-height;
     font-weight: 100;
-    h1 {
-        line-height: $navbar-height;
-        font-weight: 100;
-        color: $grey700;
-    }
+    color: $grey700;
+  }
 }
 
 .nav-links {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1001;
-    width: $navbar-width;
-    height: 100%;
-    padding-top: $navbar-height;
-    transition: left 400ms ease-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  width: $navbar-width;
+  height: 100%;
+  padding-top: $navbar-height;
+  transition: left 400ms ease-out;
 }
 
 .menu-icon-wrapper,
 .menu-title-wrapper,
 .nav-link {
-    pointer-events: initial;
-    display: block;
-    height: $navbar-height; // line-height: $navbar-height;
+  pointer-events: initial;
+  display: block;
+  height: $navbar-height; // line-height: $navbar-height;
 }
 
 .nav-link {
-    display: flex;
-    align-items: center;
-    padding-left: 15px;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: $grey500;
-    svg {
-        margin-right: 15px;
-    }
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: $grey500;
+  svg {
+    margin-right: 15px;
+  }
 }
 
 .nav-links.hidden {
-    left: -$navbar-width;
+  left: -$navbar-width;
 }
 
 .nav-links-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.95);
-    opacity: 1;
-    pointer-events: initial;
-    transition: opacity 300ms ease-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.95);
+  opacity: 1;
+  pointer-events: initial;
+  transition: opacity 300ms ease-out;
+  h3 {
+    display: inline-block;
+    font-weight: 100;
+    font-size: 1.5rem;
+    color: $grey700;
+    margin-top: 1rem;
+  }
 }
 
 .nav-links-background.hidden {
-    opacity: 0;
-    pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .sign-out-button {
-    @extend .button;
-    width: 100%;
-    background-color: $blue;
-    color: #FFF;
-    pointer-events: initial;
+  @extend .button;
+  width: 100%;
+  background-color: $blue;
+  color: #FFF;
+  pointer-events: initial;
 }

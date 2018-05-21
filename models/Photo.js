@@ -11,6 +11,7 @@ class Photo extends Document {
     this.title = file.title;
     this.width = file.width;
     this.src = file.path.slice(7);
+    this.alt = file.title;
   }
   getFieldValues() {
     return Object.assign(super.getFieldValues(), {

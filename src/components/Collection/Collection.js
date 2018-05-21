@@ -9,11 +9,11 @@ class Collection extends React.PureComponent {
     this.state = {};
   }
   render() {
-    const { title, photos } = this.props.collection;
+    const { title, documents } = this.props.collection;
     return (
       <div className="collection">
         <h2>{translate(title)}</h2>
-        <Gallery photos={photos} />
+        <Gallery photos={documents} />
       </div>
     );
   }
@@ -27,7 +27,7 @@ Collection.propTypes = {
       es: PropTypes.string,
       en: PropTypes.string
     }),
-    photos: PropTypes.arrayOf(PropTypes.shape({
+    documents: PropTypes.arrayOf(PropTypes.shape({
       src: PropTypes.string
     }))
   }).isRequired

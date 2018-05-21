@@ -1,16 +1,7 @@
 /* global firebase */
-import { handleBackendError } from './utils';
+import { handleBackendError, errorCodes } from './utils';
 import { verifyGoogleId } from './backend';
 import events from './events';
-
-const FIREBASE_UNAVAILABLE = {
-  status: 400,
-  response: {
-    body: {
-      message: 'The database is unavailabe.\nPlease try again later.'
-    }
-  }
-};
 
 const getCollections = () =>
   new Promise((resolve, reject) => {
@@ -21,29 +12,29 @@ const getCollections = () =>
         err => reject(err)
       );
     else
-      handleBackendError(FIREBASE_UNAVAILABLE);
+      handleBackendError(errorCodes.FIREBASE_UNAVAILABLE);
   });
 
-const populateCollections = (collections) => {
-  const documents = firebase.database().ref('documents').orderByChild('collection');
-  return Promise.all(collections
-    .map((collection, i) => new Promise((resolve, reject) => {
-      if (typeof firebase !== 'undefined')
-        documents.equalTo(i)
-          .once(
-            'value',
-            (snapshot) => {
-              let photos = snapshot.val();
-              if (!Array.prototype.isPrototypeOf(photos))
-                photos = Object.entries(photos).map(photo => photo[1]); // when firebase collection has only one item
-              resolve(Object.assign({}, collection, { photos }));
-            },
-            err => reject(err)
-          );
-      else
-        handleBackendError(FIREBASE_UNAVAILABLE);
-    })));
-};
+const populateDocuments = collections =>
+  Promise.all(collections.map(collection => promiseCollection(collection)));
+
+function promiseCollection(collection) {
+  return new Promise((resolve, reject) =>
+    Promise.all(collection.documents.map(docKey => promiseDocument(docKey)))
+      .then(documents => resolve(Object.assign({}, collection, { documents })))
+      .catch(err => reject(err)));
+}
+
+function promiseDocument(docKey) {
+  return new Promise((resolve, reject) =>
+    firebase.database()
+      .ref(`documents/${docKey}`)
+      .once(
+        'value',
+        snapshot => resolve(snapshot.val()),
+        err => reject(err)
+      ));
+}
 
 const getCurrentUser = () => firebase.auth().currentUser;
 firebase.auth().onAuthStateChanged((user) => {
@@ -77,7 +68,7 @@ const signOutOfGogle = () => {
 
 export {
   getCollections,
-  populateCollections,
+  populateDocuments,
   signInWithGogle,
   signOutOfGogle,
   getCurrentUser

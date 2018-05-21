@@ -8,6 +8,17 @@ const handleBackendError = (err) => {
     console.error(err);
 };
 
+const errorCodes = {
+  FIREBASE_UNAVAILABLE: {
+    status: 400,
+    response: {
+      body: {
+        message: 'The database is unavailabe.\nPlease try again later.'
+      }
+    }
+  }
+}
+
 /**
  * Fisher–Yates Shuffle
  * @param {Array} array
@@ -40,6 +51,7 @@ const translate = (data, type) => {
 
 export {
   handleBackendError,
+  errorCodes,
   shuffleArray,
   translate
 };

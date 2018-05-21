@@ -1,16 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Collection from '../Collection/Collection';
 import Container from '../Container/Container';
 import events from '../../events';
-import {
-  getCollections,
-  populateCollections
-} from '../../firebase';
-import {
-  getLocalData,
-  setLocalData
-} from '../../local-storage';
+import { getCollections, populateDocuments } from '../../firebase';
+import { getLocalData, setLocalData } from '../../local-storage';
 
 class Home extends React.Component {
   constructor() {
@@ -36,8 +29,11 @@ class Home extends React.Component {
   }
   fetchCollections() {
     getCollections()
-      .then(collections => populateCollections(collections))
-      .then(collections => setLocalData({ collections }))
+      .then(collections => populateDocuments(collections))
+      .then(collections => {
+        console.log('collections', collections);
+        setLocalData({ collections });
+      })
       .catch(err => console.error(err));
   }
   render() {
@@ -59,7 +55,3 @@ class Home extends React.Component {
 }
 
 export default Home;
-
-Home.propTypes = {
-  config: PropTypes.object.isRequired,
-};

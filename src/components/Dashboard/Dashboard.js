@@ -4,9 +4,11 @@ import { getCollections } from '../../backend';
 import Container from '../Container/Container';
 import CollectionList from '../Collection/CollectionList';
 import InputDocument from '../InputDocument/InputDocument';
-import { handleBackendError } from '../../utils';
+import Section from './Section';
+import { handleBackendError, translate } from '../../utils';
 import * as firebase from '../../firebase';
 import events from '../../events';
+import { RoundCollections, RoundFolder } from '../../assets/icons';
 
 class Dashboard extends React.Component {
   constructor() {
@@ -40,22 +42,31 @@ class Dashboard extends React.Component {
       const { addDocumentOpen } = this.state;
       return (
         <Container>
-          <h1>Dashboard</h1>
-          {!addDocumentOpen
-            ? <button className="button" onClick={() => this.setState({ addDocumentOpen: true })}>Add Documents</button>
-            : <InputDocument done={() => this.setState({ addDocumentOpen: false })} /> // TODO update list when done
-          }
-          <h2>Collections</h2>
-          {this.state.collections
-            ? this.state.collections.map(collection => (
-              <CollectionList
-                key={`collection-list-${collection.title.es}`}
-                collection={collection}
-              />
-            ))
-            : <h4>Loading...</h4>
-          }
-
+          <div className="dashboard">
+            <Section
+              title="Documentos"
+              icon={<RoundFolder />}
+            >
+              {!addDocumentOpen
+                ? <button className="button" onClick={() => this.setState({ addDocumentOpen: true })}>Add Documents</button>
+                : <InputDocument done={() => this.setState({ addDocumentOpen: false })} /> // TODO update list when done
+              }
+            </Section>
+            <Section
+              title="Colecciones"
+              icon={<RoundCollections />}
+            >
+              {this.state.collections
+                ? this.state.collections.map(collection => (
+                  <CollectionList
+                    key={`collection-list-${translate(collection.title)}`}
+                    collection={collection}
+                  />
+                ))
+                : <h4>Cargando Colecciones...</h4>
+              }
+            </Section>
+          </div>
         </Container>
       );
     }

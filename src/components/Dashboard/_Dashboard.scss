@@ -1,6 +1,12 @@
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
 .sign-in-button {
-    @extend .button;
-    width: 100%;
-    background-color: $blue;
-    color: #FFF;
+  @extend .button;
+  width: 100%;
+  background-color: $blue;
+  color: #FFF;
 }

@@ -13,21 +13,7 @@ router.get('/collections', isAuthenticated, (req, res) => {
       'value',
       (snapshot) => {
         const collections = snapshot.val();
-        Promise.all(collections.map((collection, i) => new Promise((resolve, reject) => {
-          db.ref('documents')
-            .orderByChild('collection')
-            .equalTo(i)
-            .once(
-              'value',
-              (snapshot2) => {
-                let photos = snapshot2.val();
-                if (!Array.prototype.isPrototypeOf(photos))
-                  photos = Object.entries(photos).map(photo => photo[1]); // when firebase collection has only one item
-                resolve(Object.assign({}, collection, { photos }));
-              },
-              err => reject(err)
-            );
-        })))
+        Promise.all(collections.map(collection => promiseCollection(collection, db)))
           .then(populatedCollections => res.status(200).json(populatedCollections))
           .catch((err) => {
             console.error(err);
@@ -40,6 +26,24 @@ router.get('/collections', isAuthenticated, (req, res) => {
       }
     );
 });
+
+function promiseCollection(collection, db) {
+  return new Promise((resolve, reject) =>
+    Promise.all(collection.documents.map(docKey => promiseDocument(docKey, db)))
+      .then(documents => resolve(Object.assign({}, collection, { documents })))
+      .catch(err => reject(err)));
+}
+
+
+function promiseDocument(docKey, db) {
+  return new Promise((resolve, reject) =>
+    db.ref(`documents/${docKey}`)
+      .once(
+        'value',
+        snapshot => resolve(snapshot.val()),
+        err => reject(err)
+      ));
+}
 
 const documentsUpload = multer({ dest: 'public/img/' });
 router.post('/documents', isAuthenticated, documentsUpload.array('photo'), (req, res) => {

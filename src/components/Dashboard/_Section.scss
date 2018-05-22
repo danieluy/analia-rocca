@@ -1,0 +1,20 @@
+.section {
+  width: 45%;
+  min-height: 300px;
+  border: 1rem solid $grey500;
+  border-radius: 1.5rem;
+  background-color: transparentize($color: $grey500, $amount: 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h2 {
+    font-size: 3rem;
+    color: $grey500;
+    font-weight: 700;
+  }
+  svg{
+    fill: $grey500;
+    width: 100px;
+    margin-right: 2rem;
+  }
+}

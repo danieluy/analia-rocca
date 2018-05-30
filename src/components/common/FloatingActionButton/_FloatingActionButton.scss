@@ -1,0 +1,18 @@
+.fab {
+  position: fixed;
+  z-index: 10001;
+  bottom: 1rem;
+  right: 1rem;
+  height: $navbar-height * 1.25;
+  width: $navbar-height * 1.25;
+  border-style: none;
+  border-radius: 50%;
+  background-color: $primary-color;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  svg{
+    fill: $grey50;
+    height: $navbar-height * 2 / 3;
+    width: $navbar-height * 2 / 3;
+  }
+}

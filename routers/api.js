@@ -44,6 +44,20 @@ function promiseDocument(docKey, db) {
       ));
 }
 
+router.get('/documents', isAuthenticated, (req, res) => {
+  const { firebaseAdmin } = req.app.locals;
+  const db = firebaseAdmin.database();
+  db.ref('documents')
+    .once(
+      'value',
+      snapshot => res.status(200).json(snapshot.val()),
+      (err) => {
+        console.error(err);
+        res.status(500).json({ message: 'Error reading data' });
+      }
+    );
+});
+
 const documentsUpload = multer({ dest: 'public/img/' });
 router.post('/documents', isAuthenticated, documentsUpload.array('photo'), (req, res) => {
   if (!req.body || !req.body.json)

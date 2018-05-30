@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 356:
+/***/ 357:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20,7 +20,7 @@ var _Container = __webpack_require__(201);
 
 var _Container2 = _interopRequireDefault(_Container);
 
-var _CollectionList = __webpack_require__(361);
+var _CollectionList = __webpack_require__(362);
 
 var _CollectionList2 = _interopRequireDefault(_CollectionList);
 
@@ -109,7 +109,7 @@ exports.default = Collections;
 
 /***/ }),
 
-/***/ 361:
+/***/ 362:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -129,7 +129,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _ListGallery = __webpack_require__(362);
+var _ListGallery = __webpack_require__(363);
 
 var _ListGallery2 = _interopRequireDefault(_ListGallery);
 
@@ -191,7 +191,7 @@ CollectionList.propTypes = {
 
 /***/ }),
 
-/***/ 362:
+/***/ 363:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

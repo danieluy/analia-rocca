@@ -11,12 +11,16 @@ const verifyGoogleId = idToken =>
       });
   });
 
-const getCollections = () =>
-  new Promise((resolve, reject) => {
+const getCollections = () => getTreeSection('collections');
+
+const getDocuments = () => getTreeSection('documents');
+
+function getTreeSection(section) {
+  return new Promise((resolve, reject) => {
     const token = getToken();
     if (!token)
       return requestCanceled(reject, 'Request canceled for missing token');
-    request.get('/api/collections')
+    request.get(`/api/${section}`)
       .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
         if (err)
@@ -25,6 +29,7 @@ const getCollections = () =>
           resolve(res.body);
       });
   });
+}
 
 const postDocuments = ({ files, filesInfo }) =>
   new Promise((resolve, reject) => {
@@ -48,7 +53,8 @@ const postDocuments = ({ files, filesInfo }) =>
 export {
   verifyGoogleId,
   getCollections,
-  postDocuments
+  postDocuments,
+  getDocuments
 };
 
 function getToken() {

@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 355:
+/***/ 356:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20,7 +20,7 @@ var _Container = __webpack_require__(201);
 
 var _Container2 = _interopRequireDefault(_Container);
 
-var _DashLink = __webpack_require__(360);
+var _DashLink = __webpack_require__(361);
 
 var _DashLink2 = _interopRequireDefault(_DashLink);
 
@@ -121,7 +121,7 @@ exports.default = Dashboard;
 
 /***/ }),
 
-/***/ 360:
+/***/ 361:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -139,7 +139,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(47);
+var _reactRouterDom = __webpack_require__(28);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

@@ -1,8 +1,7 @@
 .dash-link {
   width: 45%;
   min-height: 300px;
-  border: 1rem solid $grey500;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   background-color: transparentize($color: $grey500, $amount: 0.75);
   display: flex;
   flex-direction: column;
@@ -10,17 +9,29 @@
   align-items: center;
   text-decoration: none;
   color: $grey500;
+  transition: transform 200ms ease-out;
+  &:hover {
+    transform: scale(1.05);
+    h2 {
+      color: $accent-color;
+    }
+    svg {
+      fill: $accent-color;
+    }
+  }
   h2 {
+    color: $primary-color;
     font-size: 3rem;
     font-weight: 700;
+    transition: color 100ms linear;
   }
-  p{
+  p {
     font-weight: 400;
     font-size: 1.5rem;
   }
-  svg{
-    fill: $grey500;
-    width: 100px;
-    margin-right: 2rem;
+  svg {
+    fill: $primary-color;
+    width: 5rem;
+    transition: fill 100ms linear;
   }
 }

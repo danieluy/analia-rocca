@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, NavLink, Route } from 'react-router-dom';
 
 const Breadcrumbs = () => (
   <Route
@@ -23,7 +23,8 @@ const Breadcrumbs = () => (
             {steps.map(step => (
               <React.Fragment key={`step${step.pathName}`}>
                 <div className="slash">/</div>
-                <Link to={`${step.fullPath}`}>{step.pathName}</Link>
+                {/* <Link to={`${step.fullPath}`}>{step.pathName}</Link> */}
+                <NavLink exact to={`${step.fullPath}`} activeClassName="active">{step.pathName}</NavLink>
               </React.Fragment>
             ))}
           </div>

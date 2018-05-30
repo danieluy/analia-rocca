@@ -19,5 +19,9 @@
     height: $navbar-height;
     line-height: $navbar-height;
     margin: 0 10px;
+    transition: color 300ms linear;
+    &.active {
+      color: $primary-color;
+    }
   }
 }

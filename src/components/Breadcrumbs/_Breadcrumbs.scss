@@ -1,0 +1,23 @@
+.breadcrumbs {
+  margin-left: 160px;
+  list-style: none;
+  height: $navbar-height;
+  pointer-events: initial;
+  cursor: pointer;
+  display: flex;
+  .slash {
+    display: inline-block;
+    font-size: 3rem;
+    color: $grey200;
+  }
+  a {
+    color: $grey500;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    height: $navbar-height;
+    line-height: $navbar-height;
+    margin: 0 10px;
+  }
+}

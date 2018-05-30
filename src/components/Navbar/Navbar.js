@@ -6,6 +6,7 @@ import { color } from '../../assets/styles';
 import * as firebase from '../../firebase';
 import events from '../../events';
 import Logo from '../Branding/Logo';
+import Breadcrumbs from '../Breadcrumbs/Breadcrumbs';
 
 class Navbar extends React.Component {
   constructor() {
@@ -40,6 +41,7 @@ class Navbar extends React.Component {
           <Link to="/" className="menu-title-wrapper">
             <h1>{this.props.config.siteName}</h1>
           </Link>
+          <Breadcrumbs />
         </div>
         <div className={`nav-links ${!this.state.open ? 'hidden' : ''}`}>
           <Link className="nav-link" to="/" onClick={() => this.setState({ open: !this.state.open })}>

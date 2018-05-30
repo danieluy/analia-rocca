@@ -26,13 +26,12 @@
   <div id="root"></div>
   <script src="/bundle.js"></script>
   <script>
-    // Check for browser support of service worker
-    if ('serviceWorker' in navigator)
-      navigator.serviceWorker.register('/sw.js')
-        .then((registration) => console.info('Service Worker registration successful, scope is:', registration.scope))
-        .catch((err) => console.info('Service Worker registration failed, error:', err));
-    else
-      console.info('Service Workers are not upported in this browser.');
+    // if ('serviceWorker' in navigator)
+    //   navigator.serviceWorker.register('/sw.js')
+    //     .then((registration) => console.info('Service Worker registration successful, scope is:', registration.scope))
+    //     .catch((err) => console.info('Service Worker registration failed, error:', err));
+    // else
+    //   console.info('Service Workers are not upported in this browser.');
   </script>
 </body>
 

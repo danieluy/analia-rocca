@@ -30,10 +30,7 @@ class Home extends React.Component {
   fetchCollections() {
     getCollections()
       .then(collections => populateDocuments(collections))
-      .then(collections => {
-        console.log('collections', collections);
-        setLocalData({ collections });
-      })
+      .then(collections => setLocalData({ collections }))
       .catch(err => console.error(err));
   }
   render() {

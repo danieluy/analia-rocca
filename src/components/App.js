@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.scss';
 import debounce from 'lodash/debounce';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import Navbar from './Navbar/Navbar';
 import Home from './Home/Home';
@@ -11,6 +11,14 @@ import config from '../../config/';
 const Dashboard = Loadable({
   loader: () => import('./Dashboard/Dashboard'),
   loading: () => <div>Loading Dashboard...</div>
+});
+const Collections = Loadable({
+  loader: () => import('./Dashboard/Collections/Collections'),
+  loading: () => <div>Loading Collections...</div>
+});
+const Documents = Loadable({
+  loader: () => import('./Dashboard/Documents/Documents'),
+  loading: () => <div>Loading Documents...</div>
 });
 const NotFound = Loadable({
   loader: () => import('./NotFound/NotFound'),
@@ -41,15 +49,19 @@ class App extends Component {
   render() {
     const { window } = this.state;
     return (
-      <div className="app">
-        <Navbar config={config} window={this.state.window} />
-        <Switch>
-          <Route path="/" exact render={() => <Home config={config} window={this.state.window} />} />
-          <Route path="/dashboard" render={() => <Dashboard config={config} window={this.state.window} />} />
-          <Route component={NotFound} />
-        </Switch>
-        <Wallpaper width={window.width} height={window.height} />
-      </div>
+      <BrowserRouter>
+        <div className="app">
+          <Navbar config={config} window={this.state.window} />
+          <Switch>
+            <Route exact path="/" exact render={() => <Home config={config} window={this.state.window} />} />
+            <Route exact path="/dashboard" render={() => <Dashboard config={config} window={this.state.window} />} />
+            <Route exact path="/dashboard/documents" render={() => <Documents config={config} window={this.state.window} />} />
+            <Route exact path="/dashboard/collections" render={() => <Collections config={config} window={this.state.window} />} />
+            <Route component={NotFound} />
+          </Switch>
+          <Wallpaper width={window.width} height={window.height} />
+        </div>
+      </BrowserRouter>
     );
   }
 }

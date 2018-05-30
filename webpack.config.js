@@ -9,6 +9,7 @@ module.exports = (env) => {
       bundle: path.join(__dirname, '/src/index.js')
     },
     output: {
+      publicPath: '/',
       filename: '[name].js',
       path: path.join(__dirname, '/public/'),
     },

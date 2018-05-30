@@ -23,12 +23,7 @@ export default Collection;
 
 Collection.propTypes = {
   collection: PropTypes.shape({
-    title: PropTypes.shape({
-      es: PropTypes.string,
-      en: PropTypes.string
-    }),
-    documents: PropTypes.arrayOf(PropTypes.shape({
-      src: PropTypes.string
-    }))
+    title: PropTypes.object,
+    documents: PropTypes.arrayOf(PropTypes.object)
   }).isRequired
 };

@@ -4,7 +4,6 @@ const server = require('http').Server(app);
 const path = require('path');
 const bodyParser = require('body-parser');
 const bearerToken = require('express-bearer-token');
-const homeRouter = require('./routers/home');
 const authRouter = require('./routers/auth');
 const apiRouter = require('./routers/api');
 const config = require('./config/');
@@ -18,7 +17,9 @@ app.use(bodyParser.json());
 app.use(bearerToken());
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
-app.use('/', homeRouter);
+app.all('*', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, 'public/index.html'));
+});
 // Init server
 server.listen(config.server.port, () => {
   console.info(`Server listening on http://localhost:${config.server.port}`);

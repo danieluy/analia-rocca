@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ListGallery from '../Gallery/ListGallery';
 import Collection from './Collection';
 import { translate } from '../../utils';
@@ -8,7 +9,7 @@ class CollectionList extends Collection {
     const { title, documents } = this.props.collection;
     return (
       <div className="collection">
-        <h2>{translate(title.es)}</h2>
+        <h2>{translate(title)}</h2>
         <ListGallery photos={documents} />
       </div>
     );
@@ -16,3 +17,10 @@ class CollectionList extends Collection {
 }
 
 export default CollectionList;
+
+CollectionList.propTypes = {
+  collection: PropTypes.shape({
+    title: PropTypes.object,
+    documents: PropTypes.arrayOf(PropTypes.object)
+  }).isRequired
+};

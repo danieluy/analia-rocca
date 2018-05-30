@@ -4,6 +4,8 @@ const multer = require('multer');
 const Photo = require('../models/Photo');
 const Document = require('../models/Document');
 const { isAuthenticated } = require('./middleware');
+const readChunk = require('read-chunk');
+const fileType = require('file-type');
 
 router.get('/collections', isAuthenticated, (req, res) => {
   const { firebaseAdmin } = req.app.locals;
@@ -26,15 +28,12 @@ router.get('/collections', isAuthenticated, (req, res) => {
       }
     );
 });
-
 function promiseCollection(collection, db) {
   return new Promise((resolve, reject) =>
     Promise.all(collection.documents.map(docKey => promiseDocument(docKey, db)))
       .then(documents => resolve(Object.assign({}, collection, { documents })))
       .catch(err => reject(err)));
 }
-
-
 function promiseDocument(docKey, db) {
   return new Promise((resolve, reject) =>
     db.ref(`documents/${docKey}`)
@@ -57,16 +56,23 @@ router.post('/documents', isAuthenticated, documentsUpload.array('photo'), (req,
   }
   const documents = req.files
     .map((file, i) => {
+      const type = fileType(readChunk.sync(file.path, 0, 4100));
+      file.mimetype = type.mime;
+      file.extension = type.ext;
       switch (file.mimetype.split('/')[0]) {
-        case 'image':
-          return new Photo(Object.assign(file, req.body.json[i]));
+        case 'image': {
+          const photo = new Photo(Object.assign(file, req.body.json[i]));
+          return photo;
+        }
         default:
           return null;
       }
     })
     .filter(doc => !!doc);
   Document.saveMany(documents)
-    .then(() => res.status(200).json(documents.map(doc => doc.getFieldValues())))
+    .then(() => {
+      res.status(200).json(documents.map(doc => doc.getDocValues()));
+    })
     .catch((err) => {
       console.error(err);
       res.status(500).json({ message: 'Unable to save documents to Firebase' });

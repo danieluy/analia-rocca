@@ -20,6 +20,9 @@ class Navbar extends React.Component {
     this.updateAuthStatus();
     events.on('AUTH_STATE_CHANGED', this.updateAuthStatus);
   }
+  componentWillUnmount() {
+    events.off('AUTH_STATE_CHANGED', this.updateAuthStatus);
+  }
   updateAuthStatus() {
     this.setState({
       user: firebase.getCurrentUser()

@@ -6,10 +6,11 @@ import Gallery from './Gallery';
 class ListGallery extends Gallery {
   constructor() { super(); }
   render() {
-    if (this.state.photos)
+    if (this.state.photos) {
+      const { photos } = this.state;
       return (
         <div>
-          {this.state.photos.map((photo, i) => (
+          {photos.map((photo, i) => (
             <div key={`galley-image-${i}`}>
               <button onClick={() => this.setState({ open: true, index: i })} >
                 <img
@@ -23,14 +24,15 @@ class ListGallery extends Gallery {
           ))}
           {this.state.open &&
             <Carousel
-              photos={this.state.photos}
+              photos={photos}
               onClose={() => this.setState({ open: false })}
               index={this.state.index}
             />
           }
         </div>
       );
-    return <h4>Loading...</h4>;
+    }
+    return <h4>Loading List Gallery...</h4>;
   }
 }
 
